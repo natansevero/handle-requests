@@ -33,7 +33,7 @@ public class ClientRequet {
                         url = new URL("http://localhost:8080/handle");
                         String requestData = requestData(url);
                         System.out.println(String.format("Response: %s", requestData));
-                    
+
                     } catch (MalformedURLException ex) {
                         Logger.getLogger(ClientRequet.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {

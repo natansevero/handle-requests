@@ -6,8 +6,8 @@
 package com.natan.handlerequests;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/handle")
 public class HandleResource {
     
-    private int data = 0;
     private Object lock = new Object();
+    
+    private BlockingQueueTask blockingQueueTask = new BlockingQueueTask();
+    private Task task = new Task();
+    ExecutorService service = Executors.newCachedThreadPool();
     
     @GetMapping
     public String handle() throws InterruptedException, ExecutionException {
-        return "";
+        service.execute(new Producer(blockingQueueTask, task));
+//        service.execute(new Consumer(blockingQueueTask));
+        
+        int a = blockingQueueTask.get();
+
+        return "teste " + a;
     }
 }

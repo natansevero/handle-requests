@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author natan
  */
-public class BlockingQueue {
+public class BlockingQueueTask {
     
     private LinkedBlockingQueue<Task> queue = new LinkedBlockingQueue<>();
     
@@ -21,16 +21,17 @@ public class BlockingQueue {
         try {
             queue.put(task);
         } catch (InterruptedException ex) {
-            Logger.getLogger(BlockingQueue.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BlockingQueueTask.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public int get(int number) {
+    public int get() {
         try {
             Task task = queue.take();
-            return task.doSomething(number);
+            task.doSomething();
+            return task.getData();
         } catch (InterruptedException ex) {
-            Logger.getLogger(BlockingQueue.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BlockingQueueTask.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return -1;
